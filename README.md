@@ -53,6 +53,8 @@ The API will be accessible at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
   "input": "001"
 }
 ```
+![image](https://github.com/user-attachments/assets/7e7af2f9-4d77-4679-96e4-7db7595e1bb3)
+
 
 ### 🔹 Example JSON for DPDA
 ```json
@@ -88,6 +90,9 @@ The API will be accessible at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
   "final_states": ["q2"],
   "input": "01"
 }
+
+![image](https://github.com/user-attachments/assets/8f2c93ba-fda2-44f3-b330-22fbae63f709)
+
 ```
 
 ## 📌 Expected Responses
