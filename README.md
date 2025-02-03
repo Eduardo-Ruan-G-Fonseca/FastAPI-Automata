@@ -90,10 +90,8 @@ The API will be accessible at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
   "final_states": ["q2"],
   "input": "01"
 }
-
-![image](https://github.com/user-attachments/assets/8f2c93ba-fda2-44f3-b330-22fbae63f709)
-
 ```
+![image](https://github.com/user-attachments/assets/dbf147c2-ed4a-4ffe-a43d-9251e61d1e4f)
 
 ## 📌 Expected Responses
 ### 🔹 DFA
