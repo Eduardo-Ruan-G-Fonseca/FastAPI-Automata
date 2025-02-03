@@ -1,22 +1,22 @@
 """
-Automatos API - Implementação de autômatos com FastAPI
+Automata API - Implementation of automata with FastAPI
 
-📌 Esta API processa três tipos de autômatos:
+📌 This API processes three types of automata:
 1️⃣ DFA (Deterministic Finite Automaton)
 2️⃣ DPDA (Deterministic Pushdown Automaton)
 3️⃣ DTM (Deterministic Turing Machine)
 
-🔹 Funcionalidades:
-- Enviar configurações via JSON.
-- Verificar se a entrada é aceita pelo autômato.
-- Gerar e visualizar o diagrama do autômato.
+🔹 Features:
+- Send configurations via JSON.
+- Check if the input is accepted by the automaton.
+- Generate and visualize the automaton diagram.
 
 🔹 Endpoints:
-- `/dfa/`  → Processa um DFA e retorna se aceita a entrada e gera o diagrama.
-- `/dpda/` → Processa um DPDA e verifica se aceita a entrada.
-- `/dtm/`  → Processa uma Máquina de Turing Determinística (DTM).
+- `/dfa/`  → Processes a DFA, returns if it accepts the input, and generates the diagram.
+- `/dpda/` → Processes a DPDA and checks if it accepts the input.
+- `/dtm/`  → Processes a Deterministic Turing Machine (DTM).
 
-🔹 Documentação automática:
+🔹 Automatic documentation:
 - 📜 Swagger UI: http://127.0.0.1:8000/docs
 - 📜 ReDoc: http://127.0.0.1:8000/redoc
 """
@@ -31,36 +31,34 @@ from automata.pda.dpda import DPDA
 from automata.tm.dtm import DTM
 from fastapi.staticfiles import StaticFiles
 
-# Instância do FastAPI
+# FastAPI instance
 app = FastAPI(
-    title="Automatos API",
-    description="API para simulação de autômatos (DFA, DPDA, DTM) com geração de diagramas.",
+    title="Automata API",
+    description="API for automata simulation (DFA, DPDA, DTM) with diagram generation.",
     version="1.0.0"
 )
 
-# Diretório de arquivos estáticos
+# Static files directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 os.makedirs(STATIC_DIR, exist_ok=True)
 
-# Caminhos das imagens geradas
+# Paths for generated images
 IMAGE_PATH_DFA = os.path.join(STATIC_DIR, "dfa_diagram.png")
 IMAGE_PATH_DPDA = os.path.join(STATIC_DIR, "dpda_diagram.png")
 
-# Servindo arquivos estáticos
+# Serving static files
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
-
-### 📌 SERVIR O HTML DA INTERFACE
-@app.get("/", response_class=FileResponse, summary="Servir a interface web")
+### 📌 SERVING THE HTML INTERFACE
+@app.get("/", response_class=FileResponse, summary="Serve the web interface")
 async def serve_ui():
-    """📜 Servir a interface HTML da API na raiz `/`."""
+    """📜 Serve the HTML interface of the API at `/`."""
     return os.path.join(STATIC_DIR, "index.html")
-
 
 # ========================== DFA ==========================
 class DFAConfig(BaseModel):
-    """📌 Modelo para configurar um Autômato Finito Determinístico (DFA)."""
+    """📌 Model to configure a Deterministic Finite Automaton (DFA)."""
     states: Set[str]
     input_symbols: Set[str]
     transitions: Dict[str, Dict[str, str]]
@@ -68,7 +66,7 @@ class DFAConfig(BaseModel):
     final_states: Set[str]
     input: str
 
-@app.post("/dfa/", summary="Processar um DFA", description="🔹 Envia um DFA e verifica se aceita a entrada. Retorna os detalhes do processamento e gera um diagrama.")
+@app.post("/dfa/", summary="Process a DFA", description="🔹 Sends a DFA and checks if it accepts the input. Returns processing details and generates a diagram.")
 def my_dfa(dfa_config: DFAConfig):
     my_dfa = DFA(
         states=dfa_config.states,
@@ -80,7 +78,7 @@ def my_dfa(dfa_config: DFAConfig):
 
     result = my_dfa.accepts_input(dfa_config.input)
 
-    # Gera o diagrama do DFA e salva
+    # Generate and save DFA diagram
     diagram = my_dfa.show_diagram()
     diagram.draw(IMAGE_PATH_DFA, format="png")
 
@@ -95,10 +93,9 @@ def my_dfa(dfa_config: DFAConfig):
         "diagram_path": "/static/dfa_diagram.png"
     })
 
-
 # ========================== DPDA ==========================
 class DPDAConfig(BaseModel):
-    """📌 Modelo para configurar um Autômato com Pilha Determinístico (DPDA)."""
+    """📌 Model to configure a Deterministic Pushdown Automaton (DPDA)."""
     states: Set[str]
     input_symbols: Set[str]
     stack_symbols: Set[str]
@@ -108,7 +105,7 @@ class DPDAConfig(BaseModel):
     final_states: Set[str]
     input: str
 
-@app.post("/dpda/", summary="Processar um DPDA", description="🔹 Envia um DPDA e verifica se aceita a entrada.")
+@app.post("/dpda/", summary="Process a DPDA", description="🔹 Sends a DPDA and checks if it accepts the input.")
 def my_dpda(dpda_config: DPDAConfig):
     my_dpda = DPDA(
         states=dpda_config.states,
@@ -123,7 +120,7 @@ def my_dpda(dpda_config: DPDAConfig):
 
     result = my_dpda.accepts_input(dpda_config.input)
 
-    # Gera o diagrama do DPDA (opcional)
+    # Generate DPDA diagram (optional)
     diagram = my_dpda.show_diagram()
     diagram.draw(IMAGE_PATH_DPDA, format="png")
 
@@ -140,10 +137,9 @@ def my_dpda(dpda_config: DPDAConfig):
         "diagram_path": "/static/dpda_diagram.png"
     })
 
-
 # ========================== DTM ==========================
 class DTMConfig(BaseModel):
-    """📌 Modelo para configurar uma Máquina de Turing Determinística (DTM)."""
+    """📌 Model to configure a Deterministic Turing Machine (DTM)."""
     states: Set[str]
     input_symbols: Set[str]
     tape_symbols: Set[str]
@@ -153,7 +149,7 @@ class DTMConfig(BaseModel):
     final_states: Set[str]
     input: str
 
-@app.post("/dtm/", summary="Processar uma DTM", description="🔹 Envia uma Máquina de Turing e verifica se aceita a entrada.")
+@app.post("/dtm/", summary="Process a DTM", description="🔹 Sends a Turing Machine and checks if it accepts the input.")
 def my_dtm(dtm_config: DTMConfig):
     my_dtm = DTM(
         states=dtm_config.states,
