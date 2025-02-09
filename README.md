@@ -74,6 +74,7 @@ The API will be accessible at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
   "input": "ab"
 }
 ```
+![image](https://github.com/user-attachments/assets/7877a24a-986b-4394-87d0-ddde469f6793)
 
 ### 🔹 Example JSON for DTM
 ```json
@@ -92,7 +93,6 @@ The API will be accessible at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
   "input": "01"
 }
 ```
-![image](https://github.com/user-attachments/assets/7877a24a-986b-4394-87d0-ddde469f6793)
 
 
 ## 📌 Expected Responses
