@@ -53,7 +53,8 @@ The API will be accessible at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
   "input": "001"
 }
 ```
-![image](https://github.com/user-attachments/assets/7e7af2f9-4d77-4679-96e4-7db7595e1bb3)
+![image](https://github.com/user-attachments/assets/00b10885-3912-49b1-892b-da66d849a469)
+
 
 
 ### 🔹 Example JSON for DPDA
@@ -91,7 +92,8 @@ The API will be accessible at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
   "input": "01"
 }
 ```
-![image](https://github.com/user-attachments/assets/dbf147c2-ed4a-4ffe-a43d-9251e61d1e4f)
+![image](https://github.com/user-attachments/assets/7877a24a-986b-4394-87d0-ddde469f6793)
+
 
 ## 📌 Expected Responses
 ### 🔹 DFA
