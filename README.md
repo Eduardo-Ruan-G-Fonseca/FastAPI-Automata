@@ -79,18 +79,20 @@ The API will be accessible at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 ### 🔹 Example JSON for DTM
 ```json
 {
-  "states": ["q0", "q1", "q2"],
+
+  "states": ["q0", "q1", "q2", "q3", "q4"],
   "input_symbols": ["0", "1"],
-  "tape_symbols": ["0", "1", "_"],
+  "tape_symbols": ["0", "1", "x", "y", "."],
   "transitions": {
-    "q0": {"0": ["q1", "1", "R"]},
-    "q1": {"1": ["q2", "0", "R"]},
-    "q2": {"_": ["q2", "_", "R"]}
+    "q0": {"0": ["q1", "x", "R"], "y": ["q3", "y", "R"]},
+    "q1": {"0": ["q1", "0", "R"], "1": ["q2", "y", "L"], "y": ["q1", "y", "R"]},
+    "q2": {"0": ["q2", "0", "L"], "x": ["q0", "x", "R"], "y": ["q2", "y", "L"]},
+    "q3": {"y": ["q3", "y", "R"], ".": ["q4", ".", "R"]}
   },
   "initial_state": "q0",
-  "blank_symbol": "_",
-  "final_states": ["q2"],
-  "input": "01"
+  "blank_symbol": ".",
+  "final_states": ["q4"],
+  "input": "0011"
 }
 ```
 
